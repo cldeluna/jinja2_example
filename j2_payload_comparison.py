@@ -76,6 +76,12 @@ def main():
 
     print(f"\nList of dictionaries configuration payload saved to directory:\n\t{os.getcwd()} \n\tas file {my_lod_filename}\n\n")
 
+    # Read in a JSON file
+    with open(my_lod_filename, "r") as json_file:
+        my_lod_data = json.load(json_file)
+
+    print(f"\nVariable my_lod_data read in from a JSON file is of type {type(my_lod_data)}\n")
+
 
 # Standard call to the main() function.
 if __name__ == '__main__':

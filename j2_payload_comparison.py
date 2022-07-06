@@ -42,6 +42,7 @@ def main():
     :return:
     """
 
+    # Load and "pretty print" the two hardcoded config payload data structures for easy viewing
     print("\n\n---- Configuration Payload of type list[] of lists[] ----\n\n")
     print(json.dumps(init_lol_payload(), indent=4))
     print("\n\n---- Configuration Payload of type list[] of dictionaries {} ----\n\n")
@@ -51,18 +52,20 @@ def main():
     j2template_env = jinja2.Environment(loader=jinja2.FileSystemLoader("templates"))
 
     # Load a specific template in your environment in preparation for rendering
+    # This test.j2 template just renders whatever is in the list variable "mylistvar"
+    # This test.j2 template expects "mylistvar" to be a list and will iterate over the list elements
     vlan_template = j2template_env.get_template("test.j2")
     print(vlan_template.render(mylistvar=init_lol_payload()))
 
-    print("\n\n--- Template Rendering with a List of Lists Payload")
-    vlan_list_template = j2template_env.get_template("vlan_list.j2")
-    print(vlan_list_template.render(mylistvar=init_lol_payload()))
+    # Lets use the hardcoded list of lists data structure
+    print("\n\n--- Template Rendering with a List of Lists Configuration Payload")
+    vlan_lol_template = j2template_env.get_template("vlan_list.j2")
+    print(vlan_lol_template.render(mylistvar=init_lol_payload()))
 
-
-    print("\n\n--- Template Rendering with a List of Dictionaries Payload")
+    # Lets use the hardcoded list of dictionaries data structure
+    print("\n\n--- Template Rendering with a List of Dictionaries Configuration Payload")
     vlan_lod_template = j2template_env.get_template("vlan_lod.j2")
     print(vlan_lod_template.render(mylistvar=init_lod_payload()))
-
 
     # Save List of Dictionary to a JSON
     my_list_of_dicts_payload = init_lod_payload()
@@ -72,7 +75,6 @@ def main():
         json.dump(my_list_of_dicts_payload, json_file, indent=4)
 
     print(f"\nList of dictionaries configuration payload saved to directory:\n\t{os.getcwd()} \n\tas file {my_lod_filename}\n\n")
-
 
 
 # Standard call to the main() function.
